@@ -1,0 +1,357 @@
+{% extends '_base.html' %}
+
+{% block title %}
+Welcome To Chat Bot
+{% endblock title %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
+{% endblock css_files %}
+
+{% block contents %}
+
+{% include 'pages/includes/navbar.html' %}
+
+{% include 'pages/includes/breadcrumb.html' %}
+
+<div class="container" style="height: 80vh; width: 90vw;">
+    <div class="d-flex flex-column h-100 w-100 gap-3 mt-3">
+
+        <h5 id="page-id" class="m-0 fs-3">Welcome to Chat Bot! <i class="bi bi-emoji-laughing"></i></h5>
+
+        <div class="bg-transparent d-flex justify-content-center align-items-center mt-4" style="border: none;">
+            <div class="login-container" id="login-container">
+                <div class="form-container sign-up-container horizontal">
+                    <button class="login-btn-small position-left rounded-pill d-block d-lg-none" role="button" aria-label="signIn">Sign In</button>
+                    <form id="signup-form" class="d-flex flex-column align-items-center justify-content-center h-100 p-4 text-center login-form">
+                        {{ form.csrf_token }}
+                        <h1 class="m-0 fs-3">Create Account</h1>
+                        <div class="d-flex flex-column w-100 gap-2 my-2">
+
+                            <div class="d-flex w-100 justify-content-center">
+                                <div class="rounded-circle d-flex justify-content-center align-items-center" style="width: 100px; height: 100px; border: 2px solid grey;" alt="Avatar">
+                                    <div id="image-display" class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 85px; height: 85px;">
+                                        <i class="bi bi-person-fill display-5 d-flex justify-content-center align-items-center" style="width: 85px; height: 85px;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="fs-s">Upload image as your avatar</span>
+
+                            <input type="file" class="form-control" id="floatingSignUpAvatar" name="avatar" accept="image/png, image/jpg, image/jpeg">
+
+                            <div class="d-flex justify-content-center w-100">
+                                <div class="row w-100 gap-2">
+                                    <div class="col p-0">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="floatingSignUpName" placeholder="Name" name="username">
+                                            <label for="floatingSignUpName">Name</label>
+                                        </div>
+                                    </div>
+                
+                                    <div class="col p-0">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="floatingSignUpInput" placeholder="Email" name="email">
+                                            <label for="floatingSignUpInput">Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="floatingSignUpPassword" placeholder="Password" name="password">
+                                <label for="floatingSignUpPassword">Password (more than 5 chars)</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="floatingSignUpPasswordAgain" placeholder="PasswordAgain" name="password_again">
+                                <label for="floatingSignUpPasswordAgain">Password again</label>
+                            </div>
+                        </div>
+                        <button class="login-btn" role="button" type="submit">Sign Up</button>
+                    </form>
+                </div>
+                <div class="form-container sign-in-container horizontal">
+                    <button class="login-btn-small position-right rounded-pill d-block d-lg-none" role="button" aria-label="signUp">Sign Up</button>
+                    <form id="login-form" class="d-flex flex-column align-items-center justify-content-center h-100 p-4 text-center login-form" method="post" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+                        <h1 class="m-0 fs-3">Sign in</h1>
+                        <div class="d-flex flex-column w-100 gap-2 my-2">
+                            <div class="form-floating">
+                                <input type="email" class="form-control {{ 'is-invalid' if email_error }}" id="floatingSignInInput" placeholder="Email">
+                                <label for="floatingSignInInput">Email</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control {{ 'is-invalid' if pass_error }}" id="floatingSignInPassword" placeholder="Password">
+                                <label for="floatingSignInPassword">Password</label>
+                            </div>
+                        </div>
+                        {{ form.email(hidden='true', id='form-email') }}
+                        {{ form.password(hidden='true', id='form-password') }}
+                        <button id="LoginBtn" class="login-btn" role="button" type="submit">Sign In</button>
+                        {{ form.submit(hidden='true', id='form-submit') }}
+                    </form>
+                </div>
+                <div class="overlay-container overlay-horizontal">
+                    <div class="overlay">
+                        <div class="overlay-panel overlay-left">
+                            <h1 class="m-0 fs-2">All Set?</h1>
+                            <p class="fs-6">Sign-in your personal info and start your chatting journey!</p>
+                            <button class="signin-switch-btn noselect ghost d-none d-lg-flex" aria-label="signIn">
+                                <span class='text fs-6'>Sign In</span>
+                                <span class="icon">
+                                    <i class="bi bi-person-check-fill fs-4"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="overlay-panel overlay-right">
+                            <h1 class="m-0 fs-2">Hello, Friend!</h1>
+                            <p class="fs-6">Register your personal details to stay with us!</p>
+                            <button class="signup-switch-btn noselect ghost d-none d-lg-flex" aria-label="signUp">
+                                <span class='text fs-6'>Sign Up</span>
+                                <span class="icon">
+                                    <i class="bi bi-person-plus fs-4"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-absolute p-3 bottom-0 end-0" id="toastPlacement" style="z-index: 9999">
+        {% if pass_error or email_error %}
+        <div aria-label="toastError-login" class="toast text-light" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: rgba(238, 100, 76, 0.8);">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Sign Up Failed!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock contents %}
+
+{% block js_files %}
+<script>
+    const container = document.getElementById('login-container');
+
+    [].slice.call(document.querySelectorAll('[aria-label="signUp"]')).map(function (signUpEl) {
+        signUpEl.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+    });
+
+    [].slice.call(document.querySelectorAll('[aria-label="signIn"]')).map(function (signInEl) {
+        signInEl.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+    });
+
+</script>
+
+<script>
+
+    function displayAvatar() {
+        var avatar_image = document.getElementById("floatingSignUpAvatar");
+        var imageDisplay = document.getElementById("image-display");
+        var empty_file = true;
+        if (avatar_image.files.length !== 0) {
+            file = avatar_image.files[0];
+
+            if (file && file['type'].split('/')[0] === 'image') {
+                empty_file = false;
+                imageDisplay.innerHTML = `
+                    <img src="${URL.createObjectURL(file)}" class="rounded-circle mx-auto d-block" style="object-fit: cover; object-position: center;" alt="image display">
+                `;
+            }
+        }
+
+        if (empty_file === true) {
+            imageDisplay.innerHTML = `
+                <i class="bi bi-person-fill display-5 d-flex justify-content-center align-items-center" style="width: 85px; height: 85px;"></i>
+            `;
+        }
+    }
+
+    function getToastError(toastErrorText, signIn) {
+        if (toastErrorText === null) {
+            return ''
+        }
+
+        return `
+            <div aria-label="toastError-${signIn}" class="toast text-light" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: rgba(238, 100, 76, 0.8);">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${toastErrorText}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        `
+    }
+
+    function getToastSuccess(toastSuccessText, signIn) {
+        if (toastSuccessText === null) {
+            return ''
+        }
+
+        return `
+            <div aria-label="toastSuccess-${signIn}" class="toast text-light" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: rgba(76, 238, 87, 0.8);">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${toastSuccessText}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        `
+    }
+
+    function signupSubmit(event) {
+        var url = `{{ url_for('signup') }}`;
+        var request = new XMLHttpRequest();
+        request.open('POST', url, true);
+        request.onload = function() { // request successful
+           // we can use server response to our request now
+            var status = request.status;
+            
+            document.getElementById("floatingSignUpAvatar").classList.remove("is-invalid");
+            document.getElementById("floatingSignUpName").classList.remove("is-invalid");
+            document.getElementById("floatingSignUpInput").classList.remove("is-invalid");
+            document.getElementById("floatingSignUpPassword").classList.remove("is-invalid");
+            document.getElementById("floatingSignUpPasswordAgain").classList.remove("is-invalid");
+
+            var options = {
+                animation: true,
+                autohide: true,
+                delay: 5000
+            }
+
+            var toastPlacement = document.getElementById("toastPlacement");
+            toastPlacement.innerHTML = "";
+
+            if (status === 200) {
+                // Success!
+                var toastSuccessText = "Sign Up Success!"
+
+                toastPlacement.innerHTML += getToastSuccess(toastSuccessText, "signup");
+
+                var toastSuccessElList = [].slice.call(document.querySelectorAll('[aria-label="toastSuccess-signup"]'))
+                var toastSuccessList = toastSuccessElList.map(function (toastSuccessEl) {
+                    return new bootstrap.Toast(toastSuccessEl, options)
+                });
+
+                toastSuccessList.forEach(toastSuccessEl => toastSuccessEl.show());
+            } else {
+                var error_response = JSON.parse(request.response)['details'];
+                
+                for (const [error, desc] of Object.entries(error_response)) {
+                    var errorElList = [].slice.call(document.querySelectorAll(`[name="${error}"]`));
+                    errorElList.map(function (errorEl) {
+                        if (errorEl !== null) {
+                            errorEl.classList.add("is-invalid");
+                        }
+                    });
+                }
+
+                var toastErrorText = "Sign Up Failed!"
+
+                toastPlacement.innerHTML += getToastError(toastErrorText, "signup");
+
+                var toastErrorElList = [].slice.call(document.querySelectorAll('[aria-label="toastError-signup"]'))
+                var toastErrorList = toastErrorElList.map(function (toastErrorEl) {
+                    return new bootstrap.Toast(toastErrorEl, options)
+                });
+
+                toastErrorList.forEach(toastErrorEl => toastErrorEl.show());
+            }
+        };
+     
+        request.onerror = function() {
+           // request failed
+           console.log("login api failed!");
+        };
+     
+        request.send(new FormData(event.target)); // create FormData from form that triggered event
+        event.preventDefault();
+    }
+
+    document.getElementById("signup-form").addEventListener("submit", signupSubmit);
+    document.getElementById("floatingSignUpAvatar").addEventListener("change", displayAvatar);
+
+</script>
+
+<script>
+    var Login = function() {
+        this.formEmail = document.getElementById(`form-email`),
+        this.formPassword = document.getElementById(`form-password`),
+        this.formSubmit = document.getElementById(`form-submit`),
+        this.email = document.getElementById(`floatingSignInInput`),
+        this.password = document.getElementById(`floatingSignInPassword`),
+        this.loginBtn = document.getElementById(`LoginBtn`)
+    };
+
+    Login.prototype = {
+        ini: function() {
+            this._prepareAPI();
+            this._prepareFrontEnd();
+            this._addEventListner();
+        },
+        _prepareFrontEnd: function() {
+            this.email.value = this.formEmail.value;
+            this.password.value = this.formPassword.value;
+        },
+        _prepareAPI: function() {
+            var that = this;
+
+            this.syncValueChange = function(items) {
+                let curr = this;
+
+                items.forEach(item => {
+                    item.value = curr.value;
+                });
+            }
+
+        },
+        _addEventListner: function() {
+            var that = this;
+
+            this.email.addEventListener(
+                "input", 
+                that.syncValueChange.bind(that.email, [that.formEmail])
+            );
+
+            this.password.addEventListener(
+                "input", 
+                that.syncValueChange.bind(that.password, [that.formPassword])
+            );
+
+            this.loginBtn.addEventListener(
+                "click",
+                function() {
+                    that.formSubmit.click();
+                }
+            )
+        }
+    };
+
+    window.onload = function() {
+        new Login().ini();
+
+        var options = {
+            animation: true,
+            autohide: true,
+            delay: 5000
+        }
+
+        var toastErrorElList = [].slice.call(document.querySelectorAll('[aria-label="toastError-login"]'))
+        var toastErrorList = toastErrorElList.map(function (toastErrorEl) {
+            return new bootstrap.Toast(toastErrorEl, options)
+        });
+
+        toastErrorList.forEach(toastErrorEl => toastErrorEl.show());
+    };
+</script>
+{% endblock js_files %}

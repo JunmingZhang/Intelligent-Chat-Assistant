@@ -1,0 +1,8 @@
+# 1. Create a new .yaml file named openai_config.yaml in this folder
+# 2. Fill in the fields based on this template in new file
+#
+# Note: openai_config.yaml is in .gitigonore
+#
+
+
+openai_api_key: <fill your api_key> # obtain it in official website after signing up. It is free

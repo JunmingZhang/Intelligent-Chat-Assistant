@@ -1,0 +1,11 @@
+.panel-btn {
+    background: var(--panel-btn-background); 
+    color: var(--panel-btn-color); 
+    border: none; 
+    box-shadow: none;
+}
+
+.panel-btn:hover {
+    filter: brightness(110%);
+    -webkit-filter: brightness(110%);
+}

@@ -1,0 +1,11 @@
+requests
+Flask
+boto3
+Flask-Login
+flask-ngrok
+Flask-WTF
+openai
+WTForms
+pyyaml
+email_validator
+

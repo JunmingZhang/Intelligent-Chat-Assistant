@@ -1,0 +1,10 @@
+# 1. Create a new .yaml file named aws_config.yaml in this folder
+# 2. Fill in the fields based on this template in new file
+#
+# Note: aws_config.yaml is in .gitigonore
+#
+
+access_key: <fill your AK>      # how to get access key and secret key? Watch this 2-min video from 0:30: https://www.youtube.com/watch?v=vucdm8BWFu0
+secret_key: <fill your SK>
+region: <fill your region>       # e.g. us-east-1
+bucket_name: <fill bucket_name> # you could use an existing one. Otherwise, app will create a new one with the name you filled in
