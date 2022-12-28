@@ -18,12 +18,12 @@ https://user-images.githubusercontent.com/23529452/209798639-dca70b68-3df9-4a8f-
 
 ```shell
 .
-|-- app/
-|    |  
-|    |-- config/
-|    |    |-- openai_config_template.yaml
-|    |    └── aws_config_template.yaml
-|    └──...
+├── app/
+│    │  
+│    ├── config/
+│    │     ├── openai_config_template.yaml
+│    │     └── aws_config_template.yaml
+│    └──...
 └── ...
 ```
 #### 3.1.2 openai configuration
