@@ -9,6 +9,9 @@ This application is an exploratory web-app for users who want to have an instant
 ## 2. Usage
 
 
+https://user-images.githubusercontent.com/23529452/209798639-dca70b68-3df9-4a8f-9fb9-4351a968abef.mp4
+
+
 ## 3. Quick Start
 
 ### 3.1 Configure 
