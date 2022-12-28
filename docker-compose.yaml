@@ -1,7 +1,0 @@
-version: "3.8"
-services:
-  chatbot:
-    image: chatbot
-    container_name: chatbot
-    extra_hosts:
-      - "localhost:host-gateway"
