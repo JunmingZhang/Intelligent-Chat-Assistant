@@ -4,7 +4,9 @@
 
 ## 1. Introduction
 
-This application is an exploratory web-app for users who want to have an instant chat with a chatbot to help them with their mood and mental health. Instead of using human-written scripts, the chatbot is created based on the OpenAI’s GPT-3 model, which is a large language model for various Natural Language Processing tasks such as understanding human’s words, generating appropriate texts, etcs. One benefit of chatting with this application is that users can have multiple conversations without worrying about changing topics among conversations. The user data is stored in AWS s3 and Dynamo DB.
+This application is an exploratory web-app for users who want to have an instant chat with a chat bot. The chat bot could provide people with information and support when they need it. It also tries to be a friendly presence in their day-to-day lives. It can really brighten up someone's day and help them out, even if it's just in a small way.
+
+Instead of using human-written scripts, the chat bot is created based on the OpenAI’s GPT-3 model, which is a large language model for various Natural Language Processing tasks such as understanding human’s words, generating appropriate texts, etcs. One benefit of chatting with this application is that users can have multiple conversations without worrying about changing topics among conversations. The user data is stored in AWS s3 and Dynamo DB.
 
 ## 2. Usage
 
